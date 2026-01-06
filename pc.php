@@ -17,7 +17,6 @@ $rr = mysqli_num_rows($dat);
 $ree = mysqli_num_rows($da);
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,13 +54,12 @@ $ree = mysqli_num_rows($da);
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
     <!-- App css-->
     <link rel="stylesheet" type="text/css" href="css/admin.css">
-    
     <!-- date-picker css-->
     <link rel="stylesheet" type="text/css" href="css/date-picker.css">
-    
     <link rel="stylesheet" type="text/css" href="css/dropzone.css">
-    
     <link rel="stylesheet" type="text/css" href="css/jsgrid.css">
+    <!-- Travel Journal custom theme overrides -->
+    <link rel="stylesheet" type="text/css" href="css/travel-theme.css">
 </head>
 <body>
 
@@ -72,7 +70,7 @@ $ree = mysqli_num_rows($da);
          <div class="page-main-header">
         <div class="main-header-right row">
             <div class="main-header-left d-lg-none">
-                <li><a class="sidebar-header" href="pc.php" id="user2"><i data-feather="file-text"></i><span></span></a></li>
+                <div class="logo-wrapper"><a href="index.php"><img class="blur-up lazyloaded" src="../assets/images/dashboard/multikart-logo.png" alt=""></a></div>
             </div>
             <div class="mobile-sidebar">
                 <div class="media-body text-right switch-sm">
@@ -86,11 +84,11 @@ $ree = mysqli_num_rows($da);
                     </li>
                     <li class="onhover-dropdown">
                         <div class="media align-items-center">
-                            <a href="#" id="user1">PROFILE</a>
+                            <a href="#" id="user1" style="color:#2f7df6">PROFILE</a>
                         </div>
                         <ul class="profile-dropdown onhover-show-div p-20">
-                            <li><a href="profile.php"><i data-feather="user"></i>Profile</a></li>
-                            <li><a href="#"><i data-feather="log-out"></i>LOGIN</a></li>
+                            <li><a href="profile.php"><i data-feather="user" style="color:#2f7df6"></i>Profile</a></li>
+                            <li><a href="#"><i data-feather="log-out" style="color:#2f7df6"></i>LOGIN</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -107,21 +105,22 @@ $ree = mysqli_num_rows($da);
         <!-- Page Sidebar Start-->
         <div class="page-sidebar">
             <div class="main-header-left d-none d-lg-block">
-                <li><a class="sidebar-header" href="pc.php" id="user2"><i data-feather="file-text"></i><span></span></a></li>
+                <b><li><a class="sidebar-menu" href="view-list.php" id="user2"><i data-feather="file-text"></i><span></span></a></li></b>
             </div>
             <div class="sidebar custom-scrollbar">
                 <div class="sidebar-user text-center">
                     
-                    <h6 class="mt-3 f-14">PROFILE</h6>
+                    <h6 class="mt-3 f-14" style="color:#2f7df6">PROFILE</h6>
                 </div>
                 <ul class="sidebar-menu">
                     <li ><a href="dashboard.php" class="sidebar-header"  id="user2"><i data-feather="home"></i><span>Home</span></a></li>
                     <li><a class="sidebar-header" href="dashboard.php" id="user2"><i data-feather="edit"></i><span>New Entry</span></a></li>
                     <li><a class="sidebar-header" href="view-list.php" id="user2"><i data-feather="file-text"></i><span>View All Entries</span></a></li>
-                    <li><a class="sidebar-header" href="view-list.php" id="user2"><i data-feather="file-text"></i><span>View My Entries</span></a></li>
-                    <li><a class="sidebar-header" href="login.php" id="user2"><i data-feather="log-in"></i><span>LOGOUT</span></a>
+                    <li><a class="sidebar-header" href="pc.php" id="user2"><i data-feather="file-text"></i><span>My Entries</span></a></li>
+
+                    <li><a class="sidebar-header" href="login.php" id="user2"><i data-feather="log-in"></i><span>LOG-OUT</span></a>
                     </li>
-                </ul>
+                      </ul>
             </div>
         </div>
         <!-- Page Sidebar Ends-->
@@ -129,19 +128,19 @@ $ree = mysqli_num_rows($da);
         <div class="page-body">
 
             <!-- Container-fluid starts-->
-            <div class="container-fluid">
+            <div class="container-fluid" data-animate="fade-up">
                 <div class="page-header">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="page-header-left">
-                                <h3 id="j1">PROFILE's Journel
+                                <h3 id="j1" style="color:#2f7df6">PROFILE's Journel
                                 </h3>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <ol class="breadcrumb pull-right">
-                                <li class="breadcrumb-item"><a href="dashboard.php" id="user1"><i data-feather="home"></i></a></li>
-                                <li class="breadcrumb-item" id="user1">View Entries</li>
+                                <li class="breadcrumb-item"><a href="dashboard.php" style="color:#2f7df6" id="user1"><i data-feather="home"></i></a></li>
+                                <li class="breadcrumb-item" style="color:#2f7df6" id="user1">View Entries</li>
                             </ol>
                         </div>
                     </div>
@@ -149,10 +148,10 @@ $ree = mysqli_num_rows($da);
             </div>
             <!-- Container-fluid Ends-->
             <!-- Container-fluid starts-->
-                        <div class="container-fluid">
+                        <div class="container-fluid" data-animate="fade-up">
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="card">
+                        <div class="card" data-animate="fade-up">
                             <div class="card-header">
                                 <h5>All Entries</h5>
                             </div>
@@ -165,9 +164,9 @@ $ree = mysqli_num_rows($da);
                                       <table class="jsgrid-table">
                                         <tr class="jsgrid-header-row">
                                            
-                                            <th class="jsgrid-header-cell" style="width: 100px;">Entry Name</th>
-                                            <th class="jsgrid-header-cell jsgrid-align-right" style="width: 100px;">Created On</th>
-                                            <th class="jsgrid-header-cell jsgrid-align-right" style="width: 100px;">Operation</th>
+                                            <th class="jsgrid-header-cell"  style="width: 100px; color:#2f7df6">Entry Name</th>
+                                            <th class="jsgrid-header-cell jsgrid-align-right" style="width: 100px; color:#2f7df6">Created On</th>
+                                            <th class="jsgrid-header-cell jsgrid-align-right" style="width: 100px; color:#2f7df6">Operation</th>
                                             
                                         </tr>
                                         
@@ -182,10 +181,7 @@ $ree = mysqli_num_rows($da);
                                                     <td class='jsgrid-cell jsgrid-align-center' style='width: 100px;'> ". $res2['Title'] ."</td>
                                                      <td class='jsgrid-cell jsgrid-align-center' style='width: 100px;'> ". $res2['cd'] ."</td>
 
-                                                    <td><a href='display.php?title=" . urlencode($res2['Title']) . "&date=" . urlencode($res2['cd']) . "&email=" . urlencode($res2['eml']) . "' class='btn btn-primary'>View</a>
-                                                    <a href='update.php?title=" . urlencode($res2['Title']) . "&date=" . urlencode($res2['cd']) . "&email=" . urlencode($res2['eml']) . "' class='btn btn-primary'>Edit</a>
-                                                    <a href='delete.php?title=" . urlencode($res2['Title']) . "&date=" . urlencode($res2['cd']) . "&email=" . urlencode($res2['eml']) . "' class='btn btn-primary'>Delete</a></td>
-
+                                                    <td><a href='display.php?title=" . urlencode($res2['Title']) . "&date=" . urlencode($res2['cd']) . "&email=" . urlencode($res2['eml']) . "' class='btn btn-primary'>View</a></td>
                                                 </tr> ";
                                                 }
                                                 ?>
@@ -270,6 +266,8 @@ $ree = mysqli_num_rows($da);
     
 <!--script admin-->
 <script src="js/admin-script.js"></script>
+<!-- Travel Journal UI enhancements -->
+<script src="js/travel-ui.js"></script>
 
 </body>
 </html>

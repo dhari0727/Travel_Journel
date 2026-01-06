@@ -16135,6 +16135,8 @@ input:focus {
     z-index: 1; }
 
 /*======= Page Header css Start ======= */
+
+/*======= Page Header css Start ======= */
 .page-wrapper .page-main-header {
   background-color: #ffffff;
   height: 80px;
@@ -16162,12 +16164,12 @@ input:focus {
 .page-wrapper .page-body-wrapper .page-body {
   min-height: calc(100vh - 80px);
   margin-top: 80px;
-  padding: 0 15px;
+
   position: relative;
   background-color: #f8f8f9; }
 
 .page-wrapper .page-body-wrapper .page-header {
-  padding-top: 30px;
+  
   padding-bottom: 30px; }
   .page-wrapper .page-body-wrapper .page-header .row {
     -webkit-box-align: center;
@@ -16181,7 +16183,7 @@ input:focus {
           -ms-flex-align: center;
               align-items: center; }
 h3#j1 {
-    color: #98d5f4;
+    color: #1f6f97;
 }
     .page-wrapper .page-body-wrapper .page-header .row h3 {
       font-size: 24px;
@@ -16210,6 +16212,7 @@ h3#j1 {
         vertical-align: text-top; }
 
 /*======= Page Header css ends  ======= */
+
 /**======Main Header css Start ======**/
 .offcanvas .page-wrapper .page-body-wrapper .page-body {
   position: relative; }
@@ -24038,3 +24041,19 @@ body.rtl .account-setting {
     padding-right: 35px; }
     .collection-banner .contain-banner.banner-4 h2 {
       font-size: 15px; } }
+body {
+  margin: 0;
+}
+
+.page-wrapper,
+.page-body-wrapper {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+  transform: none !important;
+}
+
+.page-main-header {
+  position: fixed !important;
+  top: 0 !important;
+}
+

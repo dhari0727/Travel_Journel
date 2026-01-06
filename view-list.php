@@ -57,13 +57,12 @@ $ree = mysqli_num_rows($da);
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
     <!-- App css-->
     <link rel="stylesheet" type="text/css" href="css/admin.css">
-    
     <!-- date-picker css-->
     <link rel="stylesheet" type="text/css" href="css/date-picker.css">
-    
     <link rel="stylesheet" type="text/css" href="css/dropzone.css">
-    
     <link rel="stylesheet" type="text/css" href="css/jsgrid.css">
+    <!-- Travel Journal custom theme overrides -->
+    <link rel="stylesheet" type="text/css" href="css/travel-theme.css">
 </head>
 <body>
 
@@ -88,7 +87,7 @@ $ree = mysqli_num_rows($da);
                     </li>
                     <li class="onhover-dropdown">
                         <div class="media align-items-center">
-                            <a href="#" id="user1">PROFILE</a>
+                            <a href="#" id="user1" style="color:#2f7df6">PROFILE</a>
                         </div>
                         <ul class="profile-dropdown onhover-show-div p-20">
                             <li><a href="profile.php"><i data-feather="user"></i>Profile</a></li>
@@ -114,7 +113,7 @@ $ree = mysqli_num_rows($da);
             <div class="sidebar custom-scrollbar">
                 <div class="sidebar-user text-center">
                     
-                    <h6 class="mt-3 f-14">PROFILE</h6>
+                    <h6 class="mt-3 f-14" style="color:#2f7df6">PROFILE</h6>
                 </div>
                 <ul class="sidebar-menu">
                     <li ><a href="dashboard.php" class="sidebar-header"  id="user2"><i data-feather="home"></i><span>Home</span></a></li>
@@ -132,19 +131,19 @@ $ree = mysqli_num_rows($da);
         <div class="page-body">
 
             <!-- Container-fluid starts-->
-            <div class="container-fluid">
+            <div class="container-fluid" data-animate="fade-up">
                 <div class="page-header">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="page-header-left">
-                                <h3 id="j1">PROFILE's Journel
+                                <h3 id="j1" style="color:#2f7df6">PROFILE's Journel
                                 </h3>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <ol class="breadcrumb pull-right">
-                                <li class="breadcrumb-item"><a href="dashboard.php" id="user1"><i data-feather="home"></i></a></li>
-                                <li class="breadcrumb-item" id="user1">View Entries</li>
+                                <li class="breadcrumb-item"><a href="dashboard.php" style="color:#2f7df6" id="user1"><i data-feather="home"></i></a></li>
+                                <li class="breadcrumb-item" id="user1" style="color:#2f7df6">View Entries</li>
                             </ol>
                         </div>
                     </div>
@@ -152,10 +151,10 @@ $ree = mysqli_num_rows($da);
             </div>
             <!-- Container-fluid Ends-->
             <!-- Container-fluid starts-->
-                        <div class="container-fluid">
+                        <div class="container-fluid" data-animate="fade-up">
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="card">
+                        <div class="card" data-animate="fade-up">
                             <div class="card-header">
                                 <h5>All Entries</h5>
                             </div>
@@ -168,9 +167,9 @@ $ree = mysqli_num_rows($da);
                                       <table class="jsgrid-table">
                                         <tr class="jsgrid-header-row">
                                            
-                                            <th class="jsgrid-header-cell" style="width: 100px;">Entry Name</th>
-                                            <th class="jsgrid-header-cell jsgrid-align-right" style="width: 100px;">Created On</th>
-                                            <th class="jsgrid-header-cell jsgrid-align-right" style="width: 100px;">Operation</th>
+                                            <th class="jsgrid-header-cell" style="width: 100px; color:#2f7df6" >Entry Name</th>
+                                            <th class="jsgrid-header-cell jsgrid-align-right" style="width: 100px; color:#2f7df6">Created On</th>
+                                            <th class="jsgrid-header-cell jsgrid-align-right" style="width: 100px; color:#2f7df6">Operation</th>
                                             
                                         </tr>
                                         
@@ -270,6 +269,8 @@ $ree = mysqli_num_rows($da);
     
 <!--script admin-->
 <script src="js/admin-script.js"></script>
+<!-- Travel Journal UI enhancements -->
+<script src="js/travel-ui.js"></script>
 
 </body>
 </html>

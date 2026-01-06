@@ -14,6 +14,37 @@ session_start();
 $_SESSION['lastInsertedTitle'] = $lastInsertedTitle;
 $em = $_SESSION['eml']; 
 
+$mediaPaths = [];
+$mediaPlaces = [];
+
+if (!empty($_FILES['media_files']['name'][0])) {
+
+    $totalFiles = count($_FILES['media_files']['name']);
+
+    for ($i = 0; $i < $totalFiles; $i++) {
+
+        $fileName = time() . "_" . $_FILES['media_files']['name'][$i];
+        $tmpName  = $_FILES['media_files']['tmp_name'][$i];
+
+        $uploadDir = "uploads/media/";
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        $uploadPath = $uploadDir . $fileName;
+
+        if (move_uploaded_file($tmpName, $uploadPath)) {
+            $mediaPaths[] = $uploadPath;
+        }
+    }
+}
+
+if (!empty($_POST['media_place'])) {
+    $mediaPlaces = $_POST['media_place'];
+}
+
+$mediaFilesString  = implode(",", $mediaPaths);
+$mediaPlacesString = implode(",", $mediaPlaces);
 
 if(isset($_POST['next'])){
     $tile = $_POST['title'];
@@ -28,7 +59,7 @@ if(isset($_POST['next'])){
     $add = $_POST['ad'];
     $ptv = $_POST['iv'];
     
-    $query = "INSERT INTO db(Title,Description,Country,City,cd,dv,dr,hn,address,ptv,tv,eml) VALUES ('$tile','$d','$coun','$cin','$cd','$dv','$dr','$hn','$add','$ptv','$tv','$em')";
+    $query = "INSERT INTO db(Title,Description,Country,City,cd,dv,dr,hn,address,ptv,tv,eml,media_files,media_place) VALUES ('$tile','$d','$coun','$cin','$cd','$dv','$dr','$hn','$add','$ptv','$tv','$em','$mediaFilesString','$mediaPlacesString')";
 
     $data = mysqli_query($conn,$query);
 
@@ -42,7 +73,8 @@ if(isset($_POST['next'])){
 
 }
 ?>
-<!DOCTYPE html>
+ 
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 
@@ -79,10 +111,11 @@ if(isset($_POST['next'])){
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
     <!-- App css-->
     <link rel="stylesheet" type="text/css" href="css/admin.css">
-    
-    
-    
+    <!-- date-picker css-->
+    <link rel="stylesheet" type="text/css" href="css/date-picker.css">
     <link rel="stylesheet" type="text/css" href="css/dropzone.css">
+    <!-- Travel Journal custom theme overrides -->
+    <link rel="stylesheet" type="text/css" href="css/travel-theme.css">
 </head>
 <body>
 
@@ -103,15 +136,15 @@ if(isset($_POST['next'])){
             <div class="nav-right col">
                 <ul class="nav-menus">
                     <li>
-                        </form>
+                        
                     </li>
                     <li class="onhover-dropdown">
                         <div class="media align-items-center">
-                            <a href="#" id="user1"><i data-feather="user"></a></i>
+                            <a href="#" id="user1">PROFILE</a>
                         </div>
                         <ul class="profile-dropdown onhover-show-div p-20">
-                            <li><a href="profile.php"><i data-feather="user"></i>Profile</a></li>
-                            <li><a href="login.php"><i data-feather="log-out"></i>Log-Out</a></li>
+                            <li><a href="profile.php"><i data-feather="user"></i>Edit Profile</a></li>
+                            <li><a href="login.php"><i data-feather="log-out"></i>LOGIN</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -120,6 +153,7 @@ if(isset($_POST['next'])){
         </div>
     </div>
    
+    
     <!-- Page Header Ends -->
 
     <!-- Page Body Start-->
@@ -128,21 +162,21 @@ if(isset($_POST['next'])){
         <!-- Page Sidebar Start-->
         <div class="page-sidebar">
             <div class="main-header-left d-none d-lg-block">
-                <li><a class="sidebar-header" href="dashboard.php" id="user2"><i data-feather="edit"></i><span></span></a></li>
+                
             </div>
             <div class="sidebar custom-scrollbar">
                 <div class="sidebar-user text-center">
                     
-                    <h6 class="mt-3 f-14">Profile</h6>
+                    <h6 class="mt-3 f-14" style="color:#2f7df6" ;>PROFILE</h6>
                 </div>
                 <ul class="sidebar-menu">
-
+                    <li><a class="sidebar-header" href="home.php" id="user2"><i data-feather="file-text"></i><span>Home</span></a></li>
                     <li><a class="sidebar-header" href="dashboard.php" id="user2"><i data-feather="edit"></i><span>New Entry</span></a></li>
                     <li><a class="sidebar-header" href="view-list.php" id="user2"><i data-feather="file-text"></i><span>View All Entries</span></a></li>
                     <li><a class="sidebar-header" href="pc.php" id="user2"><i data-feather="file-text"></i><span>View My Entries</span></a></li>
-                    <li><a class="sidebar-header" href="login.php" id="user2"><i data-feather="log-in"></i><span>LogOut</span></a>
+                    <li><a class="sidebar-header" href="login.php"><i data-feather="log-in"></i><span>LOGOUT</span></a>
                     </li>
-                    
+                                        
                 </ul>
             </div>
         </div>
@@ -151,19 +185,19 @@ if(isset($_POST['next'])){
         <div class="page-body">
 
             <!-- Container-fluid starts-->
-            <div class="container-fluid">
+            <div class="container-fluid" data-animate="fade-up">
                 <div class="page-header">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="page-header-left">
-                                <h3 id="j1">Profile's Journel
+                                <h3 id="j1" style="color:#1f6f97">PROFILE's Journel
                                 </h3>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <ol class="breadcrumb pull-right">
-                                <li class="breadcrumb-item"><a href="dashboard.php" id="user1"><i data-feather="home"></i></a></li>
-                                <li class="breadcrumb-item" id="user1">Create Journel</li>
+                                <li class="breadcrumb-item"><a href="dashboard.php" style ="color:#1f6f97" id="user1"><i data-feather="home"></i></a></li>
+                                <li class="breadcrumb-item" id="user1" style ="color:#1f6f97" >Create Journel</li>
                             </ol>
                         </div>
                     </div>
@@ -172,66 +206,116 @@ if(isset($_POST['next'])){
             <!-- Container-fluid Ends-->
 
             <!-- Container-fluid starts-->
-            <div class="container-fluid">
-                <div class="card tab2-card">
+            <div class="container-fluid" data-animate="fade-up">
+                <div class="card tab2-card" data-animate="fade-up">
+                    <div class="card-header">
+                        <h5>Write your Journey</h5>
+                    </div>
                     <div class="card-body">
-                        
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade active show" id="general" role="tabpanel" aria-labelledby="general-tab">
-                        <form class="needs-validation" method="POST">
-                                    <div class="form-group row">
-                                        <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span> Title</label>
-                                        <input class="form-control col-xl-8 col-md-7"  id="validationCustom0" name="title" type="text">
-                                    </div>
-                                    <div class="form-group row editor-label">
-                                        <label class="col-xl-3 col-md-4"><span>*</span> Description</label>
-                                        <div class="col-xl-8 col-md-7 editor-space">
-                                            <textarea id="editor1" name="desc" cols="30" rows="10"  ></textarea>
-                                        </div>        
+                                <form class="needs-validation" enctype="multipart/form-data" method="POST">
+                                    <div class="tj-form-section">
+                                        <div class="tj-form-section-header">
+                                            <div class="tj-form-section-title">
+                                                <span class="tj-form-section-title-icon">
+                                                    <i class="fa fa-map-marker"></i>
+                                                </span>
+                                                <span>Journal title & story</span>
+                                            </div>
+                                            <span class="tj-form-section-caption">Start with the big picture</span>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span> Title</label>
+                                            <input class="form-control col-xl-8 col-md-7"  id="validationCustom0" name="title" type="text" placeholder="Sunrise in Santorini">
+                                        </div>
+                                        <div class="form-group row editor-label mb-0">
+                                            <label class="col-xl-3 col-md-4"><span>*</span> Description</label>
+                                            <div class="col-xl-8 col-md-7 editor-space">
+                                                <textarea id="editor1" name="desc" cols="30" rows="6"  placeholder="Write about the highlights, feelings and stories from this trip..."></textarea>
+                                            </div>        
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                                <label class="col-xl-3 col-md-4">Country Name</label>
-                                                <input class="form-control col-xl-8 col-md-7"  id="validationCustom0" name="coun" type="text">
-                                                
-                                    </div>
-                                    <div class="form-group row">
-                                                <label class="col-xl-3 col-md-4">City Name</label>
-                                                <input class="form-control col-xl-8 col-md-7"  id="validationCustom0" name="city" type="text">
-                                                                                  </div>
-                                    <div class="form-group row">
-                                                <label class="col-xl-3 col-md-4"> Current Date</label>
-                                                <input class="form-control col-md-7" name="cd" type="date" >
-                                    </div>
-                                    <div class="form-group row">
-                                                <label class="col-xl-3 col-md-4">Date Of Visit</label>
-                                                <input class="form-control col-md-7" name="dv" type="date" >
-                                    </div>
-                                    <div class="form-group row">
-                                                <label class="col-xl-3 col-md-4">Date Of Return</label>
-                                                <input class="form-control col-md-7" name="dr" type="date" >
-                                    </div>
-                                    <div class="form-group row">
-                                                <label class="col-xl-3 col-md-4">Travel Mode</label>
-                                                <input class="form-control col-xl-8 col-md-7"  id="validationCustom0" name="tv" type="text">
-                                                
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Accomodation/Hotel Name</label>
-                                        <input class="form-control  col-md-7" name="hn" id="validationCustom0" type="text">
-                                    </div>
-                                    <div class="form-group row editor-label">
-                                        <label class="col-xl-3 col-md-4"><span>*</span> Address</label>
-                                        <div class="col-xl-8 col-md-7 editor-space">
-                                            <textarea id="editor1" name="ad" cols="50" rows="5" maxlength="600"  ></textarea>
-                                                
+
+                                    <div class="tj-form-section">
+                                        <div class="tj-form-section-header">
+                                            <div class="tj-form-section-title">
+                                                <span class="tj-form-section-title-icon">
+                                                    <i class="fa fa-globe"></i>
+                                                </span>
+                                                <span>Destination</span>
+                                            </div>
+                                            <span class="tj-form-section-caption">Where did you go?</span>
+                                        </div>
+                                        <div class="tj-grid-2">
+                                            <div class="form-group">
+                                                <label>Country</label>
+                                                <input class="form-control" id="validationCustomCountry" name="coun" type="text" placeholder="Japan">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>City</label>
+                                                <input class="form-control" id="validationCustomCity" name="city" type="text" placeholder="Kyoto">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group row editor-label">
-                                        <label class="col-xl-3 col-md-4"><span>*</span>Interesting Places To Visit</label>
-                                        <div class="col-xl-8 col-md-7 editor-space">
-                                            <textarea id="editor1" name="iv" cols="50" rows="5" maxlength="1000" ></textarea>
-                                                
+
+                                    <div class="tj-form-section">
+                                        <div class="tj-form-section-header">
+                                            <div class="tj-form-section-title">
+                                                <span class="tj-form-section-title-icon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                                <span>Dates & travel</span>
+                                            </div>
+                                            <span class="tj-form-section-caption">When and how you travelled</span>
+                                        </div>
+                                        <div class="tj-grid-2">
+                                            <div class="form-group">
+                                                <label>Current Date</label>
+                                                <input class="form-control" name="cd" type="date">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Date of Visit</label>
+                                                <input class="form-control" name="dv" type="date">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Date of Return</label>
+                                                <input class="form-control" name="dr" type="date">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Travel Mode</label>
+                                                <input class="form-control" id="validationCustomTravelMode" name="tv" type="text" placeholder="Flight, train, road trip...">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tj-form-section mb-0">
+                                        <div class="tj-form-section-header">
+                                            <div class="tj-form-section-title">
+                                                <span class="tj-form-section-title-icon">
+                                                    <i class="fa fa-bed"></i>
+                                                </span>
+                                                <span>Stay & highlights</span>
+                                            </div>
+                                            <span class="tj-form-section-caption">Where you stayed and places you loved</span>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustomHotel" class="col-xl-3 col-md-4"><span>*</span> Accomodation / Hotel Name</label>
+                                            <input class="form-control col-md-7" name="hn" id="validationCustomHotel" type="text" placeholder="Coastal View Hotel">
+                                        </div>
+                                        <div class="form-group row editor-label">
+                                            <label class="col-xl-3 col-md-4"><span>*</span> Address</label>
+                                            <div class="col-xl-8 col-md-7 editor-space">
+                                                <textarea id="editorAddress" name="ad" cols="50" rows="3" maxlength="600"  placeholder="Street, city, country"></textarea>
+                                                    
+                                            </div>
+                                        </div>
+                                        <div class="form-group row editor-label mb-0">
+                                            <label class="col-xl-3 col-md-4"><span>*</span>Interesting Places To Visit</label>
+                                            <div class="col-xl-8 col-md-7 editor-space">
+                                                <textarea id="editorHighlights" name="iv" cols="50" rows="4" maxlength="1000"  placeholder="Must‑visit spots, cafés and experiences from this trip..."></textarea>
+                                                    
+                                            </div>
                                         </div>
                                     </div>
                                    <!-- <div class="form-group row">
@@ -242,9 +326,41 @@ if(isset($_POST['next'])){
                                         <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Upload Movie Clip</label>
                                         <input type="file" id="myFile" name="filename">
                                     </div>--->
-                                   
-                            
-                                
+                                    <br>
+                                    <div class="tj-form-section">
+                                    <div class="tj-form-section-header">
+                                        <div class="tj-form-section-title">
+                                            <span class="tj-form-section-title-icon">
+                                                <i class="fa fa-camera"></i>
+                                            </span>
+                                            <span>Media & Memories</span>
+                                        </div>
+                                        <span class="tj-form-section-caption">Upload images or videos for each place</span>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-md-4">
+                                            Place Name
+                                        </label>
+                                        <input 
+                                            type="text" 
+                                            name="media_place[]" 
+                                            class="form-control col-xl-8 col-md-7" 
+                                            placeholder="e.g. Eiffel Tower">
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-md-4">
+                                            Upload Media
+                                        </label>
+                                        <input 
+                                            type="file" 
+                                            name="media_files[]" 
+                                            class="form-control col-xl-8 col-md-7"
+                                            accept="image/*,video/*"
+                                            multiple>
+                                    </div>
+                                </div>
                                 <div class="typo-content product-pagination ">
                                     <ul class="pagination">
                                         <li class="page-item"><a class="page-link" href="dashboard1.php">Next</a></li>
@@ -262,10 +378,14 @@ if(isset($_POST['next'])){
                     </div>
                 </div>
             </div>
+                    
+                    
+                </div>
+            </div>
             <!-- Container-fluid Ends-->
 
         </div>
-
+        </form>
         <!-- footer start-->
         <footer class="footer">
             <div class="container-fluid">
@@ -277,11 +397,8 @@ if(isset($_POST['next'])){
             </div>
         </footer>
         <!-- footer end-->
-
     </div>
-
-</div>
-
+    </div>
 <!-- latest jquery-->
 <script src="js/jquery-3.3.1.min.js"></script>
 
@@ -312,8 +429,17 @@ if(isset($_POST['next'])){
 <script src="js/dropzone.js"></script>    
     
     
+
+<!--Datepicker jquery
+    
+ <script src="js/datepicker.custom.js"></script>
+<script src="js/datepicker.en.js"></script>
+<script src="js/datepicker.js"></script>-->
+    
 <!--script admin-->
 <script src="js/admin-script.js"></script>
+<!-- Travel Journal UI enhancements -->
+<script src="js/travel-ui.js"></script>
 
 </body>
 </html>

@@ -43,6 +43,7 @@ if(isset($_POST['next'])){
 
 }
  ?>
+ 
  <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -80,11 +81,11 @@ if(isset($_POST['next'])){
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
     <!-- App css-->
     <link rel="stylesheet" type="text/css" href="css/admin.css">
-    
     <!-- date-picker css-->
     <link rel="stylesheet" type="text/css" href="css/date-picker.css">
-    
     <link rel="stylesheet" type="text/css" href="css/dropzone.css">
+    <!-- Travel Journal custom theme overrides -->
+    <link rel="stylesheet" type="text/css" href="css/travel-theme.css">
 </head>
 <body>
 
@@ -113,7 +114,7 @@ if(isset($_POST['next'])){
                         </div>
                         <ul class="profile-dropdown onhover-show-div p-20">
                             <li><a href="profile.php"><i data-feather="user"></i>Edit Profile</a></li>
-                            <li><a href="#"><i data-feather="log-out"></i>LOGIN</a></li>
+                            <li><a href="login.php"><i data-feather="log-out"></i>LOGIN</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -154,7 +155,7 @@ if(isset($_POST['next'])){
         <div class="page-body">
 
             <!-- Container-fluid starts-->
-            <div class="container-fluid">
+            <div class="container-fluid" data-animate="fade-up">
                 <div class="page-header">
                     <div class="row">
                         <div class="col-lg-6">
@@ -175,8 +176,8 @@ if(isset($_POST['next'])){
             <!-- Container-fluid Ends-->
 
             <!-- Container-fluid starts-->
-            <div class="container-fluid">
-                <div class="card tab2-card">
+            <div class="container-fluid" data-animate="fade-up">
+                <div class="card tab2-card" data-animate="fade-up">
                     <div class="card-header">
                         <h5>Expenses</h5>
                     </div>
@@ -340,6 +341,8 @@ if(isset($_POST['next'])){
     
 <!--script admin-->
 <script src="js/admin-script.js"></script>
+<!-- Travel Journal UI enhancements -->
+<script src="js/travel-ui.js"></script>
 
 </body>
 </html>

@@ -4,7 +4,8 @@ $email=$_GET['email'];
 $dash2 = "SELECT * from db2 where Title='$na' && eml='$email' ";
 $dashdata2=mysqli_query($conn,$dash2);
 $result2=mysqli_num_rows($dashdata2); ?>
-<!DOCTYPE html>
+ 
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 
@@ -41,11 +42,11 @@ $result2=mysqli_num_rows($dashdata2); ?>
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
     <!-- App css-->
     <link rel="stylesheet" type="text/css" href="css/admin.css">
-    
     <!-- date-picker css-->
     <link rel="stylesheet" type="text/css" href="css/date-picker.css">
-    
     <link rel="stylesheet" type="text/css" href="css/dropzone.css">
+    <!-- Travel Journal custom theme overrides -->
+    <link rel="stylesheet" type="text/css" href="css/travel-theme.css">
 </head>
 <body>
 
@@ -56,7 +57,7 @@ $result2=mysqli_num_rows($dashdata2); ?>
          <div class="page-main-header">
         <div class="main-header-right row">
             <div class="main-header-left d-lg-none">
-                <div class="logo-wrapper"><a href="index.php"><img class="blur-up lazyloaded" src="../assets/images/dashboard/multikart-logo.png" alt=""></a></div>
+                
             </div>
             <div class="mobile-sidebar">
                 <div class="media-body text-right switch-sm">
@@ -74,7 +75,7 @@ $result2=mysqli_num_rows($dashdata2); ?>
                         </div>
                         <ul class="profile-dropdown onhover-show-div p-20">
                             <li><a href="profile.php"><i data-feather="user"></i>Edit Profile</a></li>
-                            <li><a href="#"><i data-feather="log-out"></i>Log-Out</a></li>
+                            <li><a href="login.php"><i data-feather="log-out"></i>LOGIN</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -92,7 +93,7 @@ $result2=mysqli_num_rows($dashdata2); ?>
         <!-- Page Sidebar Start-->
         <div class="page-sidebar">
             <div class="main-header-left d-none d-lg-block">
-                <div class="logo-wrapper"><a href="dashboard.php"><img class="blur-up lazyloaded" src="../assets/images/dashboard/multikart-logo.png" alt="Logo"></a></div>
+                
             </div>
             <div class="sidebar custom-scrollbar">
                 <div class="sidebar-user text-center">
@@ -104,200 +105,111 @@ $result2=mysqli_num_rows($dashdata2); ?>
                     <li><a class="sidebar-header" href="dashboard.php" id="user2"><i data-feather="edit"></i><span>New Entry</span></a></li>
                     <li><a class="sidebar-header" href="view-list.php" id="user2"><i data-feather="file-text"></i><span>View All Entries</span></a></li>
                     <li><a class="sidebar-header" href="pc.php" id="user2"><i data-feather="file-text"></i><span>View My Entries</span></a></li>
-                    <li><a class="sidebar-header" href="login.php"><i data-feather="log-in"></i><span>Log-Out</span></a>
+                    <li><a class="sidebar-header" href="login.php"><i data-feather="log-in"></i><span>LOGOUT</span></a>
                     </li>
+                                        
                 </ul>
             </div>
         </div>
         <!-- Page Sidebar Ends-->
+        <!-- Page Sidebar Ends-->
+<div class="page-body">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-11 col-md-12">
 
-        <div class="page-body">
+                <?php if ($res1 = mysqli_fetch_assoc($dashdata2)) { ?>
 
-            <!-- Container-fluid starts-->
+
+                <!-- FOOD EXPENSES -->
+                <div class="tj-section">
+                    <h4>Expenses</h4>
+
+                    <div class="tj-expense-card"><span>Accomodation</span><span>₹ <?php echo $res1['accomodation']; ?></span></div>
+                    <div class="tj-expense-card"><span>Luggage Locker Cost</span><span>₹ <?php echo $res1['locker']; ?></span></div>
+                    <div class="tj-expense-card"><span>Airport Misc Cost</span><span>₹ <?php echo $res1['airport']; ?></span></div>
+                    <div class="tj-expense-card"><span>Tour Guide Cost</span><span>₹ <?php echo $res1['tour']; ?></span></div>
+                    <div class="tj-expense-card"><span>Phone Recharge Cost</span><span>₹ <?php echo $res1['phone']; ?></span></div>
+                    <div class="tj-expense-card"><span>Internet Cost</span><span>₹ <?php echo $res1['internet']; ?></span></div>
+                    <div class="tj-expense-card"><span>Camera Cost</span><span>₹ <?php echo $res1['camera']; ?></span></div>
+                    <div class="tj-expense-card"><span>Medical Insurance Cost</span><span>₹ <?php echo $res1['insurance']; ?></span></div>
+                    <div class="tj-expense-card"><span>Medical Cost</span><span>₹ <?php echo $res1['medi']; ?></span></div>
+                <?php } ?>
+
+                <!-- PAGINATION -->
+                <div class="tj-pagination">
+                    <a class="btn btn-light"
+                       href="display1.php?title=<?php echo urlencode($_GET['title']); ?>&date=<?php echo urlencode($_GET['date']); ?>&email=<?php echo urlencode($_GET['email']); ?>">
+                        ← Previous
+                    </a>
+
+                    <a class="btn btn-primary"
+                       href="display3.php?title=<?php echo urlencode($_GET['title']); ?>&date=<?php echo urlencode($_GET['date']); ?>&email=<?php echo urlencode($_GET['email']); ?>">
+                        Next →
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+            <!-- Container-fluid Ends-->
+        <!-- footer start-->
+        <footer class="footer">
             <div class="container-fluid">
-                <div class="page-header">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="page-header-left">
-                                <h3 id="j1">PROFILE's Journel
-                                </h3>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <ol class="breadcrumb pull-right">
-                                <li class="breadcrumb-item"><a href="index.php" id="user1"><i data-feather="home"></i></a></li>
-                                <li class="breadcrumb-item" id="user1">Create Journel</li>
-                            </ol>
-                        </div>
+                <div class="row">
+                    <div class="col-md-6 footer-copyright">
+                        <p class="mb-0">Copyright 2023 © Travel All rights reserved.</p>
                     </div>
                 </div>
             </div>
-            <form class="needs-validation" method="POST">
-                                    <div class="form-group row col-xl-12">
-                                            <div class="tab-pane fade active show" id="top-profile" role="tabpanel" aria-labelledby="top-profile-tab">
-                                            
-                                            <h5 class="f-w-600">iii) Accomodation</h5>    
-                                            <div class="table-responsive profile-table ">
-                                                <table class="table table-responsive">
-                                                    <tbody>
-                                                    <tr><?php
-                                                        while($res2 = mysqli_fetch_assoc($dashdata2)){ 
-                                                        echo '<td>a) Accomodation/Hotel Cost Per Night:</td>
-                                                        <td  ><input class="form-control " id="validationCustom0" name = "ac" readonly value='.$res2['accomodation'].'></td>
-                                                    </tr>
-                                                        
-                                                    </tbody>
-                                                </table>
-                                                
-                                            </div>
-                                                
-                                            <h5 class="f-w-600">iv) Locker Cost</h5>    
-                                            <div class="table-responsive profile-table">
-                                                <table class="table table-responsive">
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>a) Luggage Locker Cost:</td>
-                                                        <td><input class="form-control " id="validationCustom0" name="loc" readonly value='.$res2['locker'].'></td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                                
-                                            <h5 class="f-w-600">v) Airport Cost</h5>    
-                                            <div class="table-responsive profile-table">
-                                                <table class="table table-responsive">
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>a) Airport Misc Cost:</td>
-                                                        <td><input class="form-control " id="validationCustom0" name="air" readonly value='.$res2['airport'].' ></td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            
-                                            <h5 class="f-w-600">vi) Tour Cost</h5>    
-                                            <div class="table-responsive profile-table">
-                                                <table class="table table-responsive">
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>a) Tour Guide Cost:</td>
-                                                        <td><input class="form-control " id="validationCustom0" name="tr" readonly value='.$res2['tour'].'></td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                                
-                                             <h5 class="f-w-600">vii) Phone Cost</h5>    
-                                            <div class="table-responsive profile-table">
-                                                <table class="table table-responsive">
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>a) Phone Recharge Cost:</td>
-                                                        <td><input class="form-control " id="validationCustom0" name="ph" readonly value='.$res2['phone'].'></td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                                
-                                             <h5 class="f-w-600">viii) Internet Cost</h5>    
-                                            <div class="table-responsive profile-table">
-                                                <table class="table table-responsive">
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>a) Internet Cost:</td>
-                                                        <td><input class="form-control " id="validationCustom0"  name="int" readonly value='.$res2['internet'].'></td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                                
-                                             <h5 class="f-w-600">ix) Camera Cost</h5>    
-                                            <div class="table-responsive profile-table">
-                                                <table class="table table-responsive">
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>a) Camera Cost:</td>
-                                                        <td><input class="form-control " id="validationCustom0" name="cam" readonly value='.$res2['camera'].'></td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            
-                                            <h5 class="f-w-600">x) Insurance Cost</h5>    
-                                            <div class="table-responsive profile-table">
-                                                <table class="table table-responsive">
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>a) Medical Insurance Cost:</td>
-                                                        <td><input class="form-control " id="validationCustom0" name="ins" readonly value='.$res2['insurance'].'></td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                                
-                                            <h5 class="f-w-600">xi) Medical Cost</h5>    
-                                            <div class="table-responsive profile-table">
-                                                <table class="table table-responsive">
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>a) Emergancy Medical Cost:</td>
-                                                        <td><input class="form-control " id="validationCustom0" name="med" readonly value='.$res2['medi'].'></td>
-                                                    </tr>'; } 
-                                                    ?>
-                                                    </tbody>
-                                                </table>
-                                            </div> 
-                                </form>
-                               <div class="typo-content product-pagination ">
-                                    <ul class="pagination">
-                                        <li class="page-item"><a class="page-link" href="display1.php?title=<?php echo urlencode($res5['Title']); ?>&date=<?php echo urlencode($res5['cd']); ?>&email=<?php echo urlencode($res5['eml']);?>" aria-label="Previous"><span aria-hidden="true"><i class="fa fa-chevron-left" aria-hidden="true"></i></span> <span class="sr-only">Previous</span></a>
-                                        </li>
-                                        <li class="page-item active"><a class="page-link" href="display1.php?title=<?php echo urlencode($res5['Title']); ?>&date=<?php echo urlencode($res5['cd']); ?>&email=<?php echo urlencode($res5['eml']);?>">Previous</a></li>
-                                        <li class="page-item"><a class="page-link" href="display3.php?title=<?php echo urlencode($res5['Title']); ?>&date=<?php echo urlencode($res5['cd']); ?>&email=<?php echo urlencode($res5['eml']);?>">Next</a></li>
-                                        <li class="page-item"><a class="page-link" href="display3.php?title=<?php echo urlencode($res5['Title']); ?>&date=<?php echo urlencode($res5['cd']); ?>&email=<?php echo urlencode($res5['eml']);?>" aria-label="Next"><span aria-hidden="true"><i class="fa fa-chevron-right" aria-hidden="true"></i></span> <span class="sr-only">Next</span></a>
-                                        </li>
-                                    </ul>
-                                </div>
+        </footer>
+        <!-- footer end-->
+    </div>
+    </div>
+<!-- latest jquery-->
+<script src="js/jquery-3.3.1.min.js"></script>
 
-                                                    
- <script src="js/jquery-3.3.1.min.js"></script>
-
-<!-- Bootstrap js -->
+<!-- Bootstrap js-->
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.js"></script>
 
-<!-- feather icon js -->
+<!-- feather icon js-->
 <script src="js/feather.min.js"></script>
 <script src="js/feather-icon.js"></script>
 
-<!-- Sidebar jquery -->
+<!-- Sidebar jquery-->
 <script src="js/sidebar-menu.js"></script>
 
-<!-- Customizer admin -->
+
+<!--Customizer admin-->
 <script src="js/admin-customizer.js"></script>
 
-<!-- lazyload js -->
+<!-- lazyload js-->
 <script src="js/lazysizes.min.js"></script>
 
-<!-- right sidebar js -->
+<!--right sidebar js-->
 <script src="js/chat-menu.js"></script>
-
-<!-- dropzone js -->
+    
+    
+<!-- dropzone js-->
 <script src="js/dropzone-script.js"></script>
-<script src="js/dropzone.js"></script>
+<script src="js/dropzone.js"></script>    
+    
+    
 
-<!-- Jsgrid js -->
-<script src="js/jsgrid.min.js"></script>
-<script src="js/griddata-page-list.js"></script>
-<script src="js/jsgrid-page-list.js"></script>
-
-<!-- Datepicker jquery -->
-<script src="js/datepicker.custom.js"></script>
+<!--Datepicker jquery
+    
+ <script src="js/datepicker.custom.js"></script>
 <script src="js/datepicker.en.js"></script>
-<script src="js/datepicker.js"></script>
-
-<!-- script admin -->
+<script src="js/datepicker.js"></script>-->
+    
+<!--script admin-->
 <script src="js/admin-script.js"></script>
+<!-- Travel Journal UI enhancements -->
+<script src="js/travel-ui.js"></script>
 
 </body>
 </html>

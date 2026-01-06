@@ -82,6 +82,8 @@ if (isset($_POST["sn"])) {
 
     <!-- Theme css -->
     <link rel="stylesheet" type="text/css" href="css/color18.css" media="screen" id="color">
+    <!-- Travel Journal custom theme overrides -->
+    <link rel="stylesheet" type="text/css" href="css/travel-theme.css">
 
 
 </head>
@@ -135,7 +137,7 @@ if (isset($_POST["sn"])) {
     <!-- header end -->
 
 <!--section start-->
-    <section class="register-page section-b-space">
+    <section class="register-page section-b-space" data-animate="fade-up">
          <!-- breadcrumb start -->
     <div class="breadcrumb-section">
         <div class="container">
@@ -159,7 +161,7 @@ if (isset($_POST["sn"])) {
     <!-- breadcrumb End -->
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12" data-animate="fade-up">
                     <h3>create account</h3>
                     <div class="theme-card">
                         <form method="POST" class="theme-form">
@@ -988,13 +990,7 @@ if (isset($_POST["sn"])) {
     </div>
     <!-- theme setting -->
 
-    <!-- tap to top -->
-    <div class="tap-top">
-        <div>
-            <i class="fa fa-angle-double-up"></i>
-        </div>
-    </div>
-    <!-- tap to top End -->
+    
 
 
     <!-- latest jquery-->
@@ -1024,6 +1020,8 @@ if (isset($_POST["sn"])) {
 
     <!-- Theme js-->
     <script src="js/script.js"></script>
+    <!-- Travel Journal UI enhancements -->
+    <script src="js/travel-ui.js"></script>
 
 
 

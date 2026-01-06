@@ -22,8 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['travelMode'])) {
     }
 }
  ?>
-
-<!DOCTYPE html>
+ 
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 
@@ -56,14 +56,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['travelMode'])) {
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
 
     <!-- Icons -->
-    <link rel="stylesheet" type="text/css" href="font-awesome-4.7.0/css/font-awesome.css">
+   <link rel="stylesheet" type="text/css" href="font-awesome-4.7.0/css/font-awesome.css">
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
     <!-- App css-->
     <link rel="stylesheet" type="text/css" href="css/admin.css">
-
+    <!-- date-picker css-->
+    <link rel="stylesheet" type="text/css" href="css/date-picker.css">
     <link rel="stylesheet" type="text/css" href="css/dropzone.css">
+    <!-- Travel Journal custom theme overrides -->
+    <link rel="stylesheet" type="text/css" href="css/travel-theme.css">
 </head>
 <body>
+
+<!-- page-wrapper Start-->
 <div class="page-wrapper">
 
     <!-- Page Header Start-->
@@ -80,15 +85,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['travelMode'])) {
             <div class="nav-right col">
                 <ul class="nav-menus">
                     <li>
-                        </form>
+                        
                     </li>
                     <li class="onhover-dropdown">
                         <div class="media align-items-center">
-                            <a href="#" id="user1">Profile</a>
+                            <a href="#" id="user1">PROFILE</a>
                         </div>
                         <ul class="profile-dropdown onhover-show-div p-20">
-                            <li><a href="profile.php"><i data-feather="user"></i>Profile</a></li>
-                            <li><a href="#"><i data-feather="log-out"></i>Log-Out</a></li>
+                            <li><a href="profile.php"><i data-feather="user"></i>Edit Profile</a></li>
+                            <li><a href="login.php"><i data-feather="log-out"></i>LOGIN</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -97,6 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['travelMode'])) {
         </div>
     </div>
    
+    
     <!-- Page Header Ends -->
 
     <!-- Page Body Start-->
@@ -110,14 +116,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['travelMode'])) {
             <div class="sidebar custom-scrollbar">
                 <div class="sidebar-user text-center">
                     
-                    <h6 class="mt-3 f-14">Profile</h6>
+                    <h6 class="mt-3 f-14">PROFILE</h6>
                 </div>
                 <ul class="sidebar-menu">
-                    <li ><a href="dashboard.php" class="sidebar-header"  id="user2"><i data-feather="home"></i><span>Home</span></a></li>
+                    <li><a class="sidebar-header" href="dashboard.php" id="user2"><i data-feather="file-text"></i><span>Home</span></a></li>
                     <li><a class="sidebar-header" href="dashboard.php" id="user2"><i data-feather="edit"></i><span>New Entry</span></a></li>
-                    <li><a class="sidebar-header" href="view-list.php" id="user2"><i data-feather="file-text"></i><span>View My Entries</span></a></li>
-                    <li><a class="sidebar-header" href="login.php" id="user2"><i data-feather="log-in"></i><span>Log-Out</span></a>
+                    <li><a class="sidebar-header" href="view-list.php" id="user2"><i data-feather="file-text"></i><span>View All Entries</span></a></li>
+                    <li><a class="sidebar-header" href="pc.php" id="user2"><i data-feather="file-text"></i><span>View My Entries</span></a></li>
+                    <li><a class="sidebar-header" href="login.php"><i data-feather="log-in"></i><span>LOGOUT</span></a>
                     </li>
+                                        
                 </ul>
             </div>
         </div>
@@ -126,12 +134,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['travelMode'])) {
         <div class="page-body">
 
             <!-- Container-fluid starts-->
-            <div class="container-fluid">
+            <div class="container-fluid" data-animate="fade-up">
                 <div class="page-header">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="page-header-left">
-                                <h3 id="j1">Profile's Journel
+                                <h3 id="j1">PROFILE's Journel
                                 </h3>
                             </div>
                         </div>
@@ -144,137 +152,234 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['travelMode'])) {
                     </div>
                 </div>
             </div>
-            <!-- Container-fluid starts-->
+            <!-- Container-fluid Ends-->
+<div class="container-fluid tj-view">
+    <?php while ($result = mysqli_fetch_assoc($dashdata)) { ?>
+
+    <div class="row">
+
+        <!-- LEFT CONTENT -->
+        <div class="col-lg-8">
+
+            <div class="tj-hero">
+                <h1><?php echo htmlspecialchars($result['Title']); ?></h1>
+                <p class="tj-sub"><?php echo htmlspecialchars($result['Description']); ?></p>
+            </div>
+
+            <div class="tj-section">
+                <h5><i class="fa fa-bed"></i> Stay</h5>
+                <p class="tj-bold"><?php echo htmlspecialchars($result['hn']); ?></p>
+                <p><?php echo nl2br(htmlspecialchars($result['address'])); ?></p>
+
+                <a href="https://www.makemytrip.com/hotels/" target="_blank" class="btn btn-primary">
+                    Explore Hotels
+                </a>
+            </div>
+
+            <div class="tj-section">
+    <h5><i class="fa fa-map-signs"></i> Places I Loved</h5>
+
+    <?php
+    $places = explode("\n", $result['ptv']);
+
+    foreach ($places as $place) {
+        $place = trim($place);
+
+        if ($place !== '') {
+            $place = strip_tags($place);
+            $place = htmlspecialchars($place, ENT_QUOTES, 'UTF-8');
+
+            // normalize unicode bold characters
+            $place = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $place);
+
+            echo "<div class='tj-place-card'>{$place}</div>";
+        }
+    }
+    ?>
+</div>
+<?php
+$media = array_values(array_filter(array_map('trim', explode(",", $result['media_files']))));
+?>
+
+<?php if (count($media) > 0) { ?>
+<div id="tjCarousel" class="carousel slide tj-carousel" data-bs-ride="carousel" data-bs-interval="4000">
+
+    <div class="carousel-inner">
+        <?php foreach ($media as $i => $file) { 
+            $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+        ?>
+            <div class="carousel-item <?php echo $i === 0 ? 'active' : ''; ?>">
+
+                <?php if (in_array($ext, ['mp4','webm','ogg'])) { ?>
+                    <video class="tj-carousel-video"
+                           muted
+                           playsinline
+                           loop>
+                        <source src="<?php echo $file; ?>" type="video/<?php echo $ext; ?>">
+                    </video>
+                <?php } else { ?>
+                    <img src="<?php echo $file; ?>" class="d-block w-100 tj-carousel-img">
+                <?php } ?>
+
+            </div>
+        <?php } ?>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#tjCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+
+    <button class="carousel-control-next" type="button" data-bs-target="#tjCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+
+</div>
+<?php } ?>
+
+
+
+
+
+
+
+
+        </div>
+
+        <!-- RIGHT INFO PANEL -->
+        <div class="col-lg-4">
+            <div class="tj-info-panel">
+
+                <div class="tj-info-row">
+                    <i class="fa fa-map-marker"></i>
+                    <div>
+                        <small>Destination</small>
+                        <p><?php echo htmlspecialchars($result['City']); ?>, <?php echo htmlspecialchars($result['Country']); ?></p>
+                    </div>
+                </div>
+
+                <div class="tj-info-row">
+                    <i class="fa fa-calendar"></i>
+                    <div>
+                        <small>Travel Dates</small>
+                        <p><?php echo $result['dv']; ?> → <?php echo $result['dr']; ?></p>
+                    </div>
+                </div>
+
+                <div class="tj-info-row">
+                    <i class="fa fa-plane"></i>
+                    <div>
+                        <small>Travel Mode</small>
+                        <p><?php echo htmlspecialchars($result['tv']); ?></p>
+                    </div>
+                </div>
+
+                <div class="tj-info-row">
+                    <i class="fa fa-clock"></i>
+                    <div>
+                        <small>Journal Created</small>
+                        <p><?php echo $result['cd']; ?></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+     <div class="tj-step-nav">
+  <a class="tj-next-btn"
+     href="display1.php?title=<?php echo urlencode($resulta['Title']); ?>&date=<?php echo urlencode($resulta['cd']); ?>&email=<?php echo urlencode($resulta['eml']); ?>">
+    Next <span>→</span>
+  </a>
+</div>
+
+</div>
+
+
+    <?php } ?>
+</div>
+            <!-- Container-fluid Ends-->
+
+        </div>
+        </form>
+        <!-- footer start-->
+        <footer class="footer">
             <div class="container-fluid">
-                <div class="card tab2-card">
-                    <div class="card-body">
-
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade active show" id="general" role="tabpanel" aria-labelledby="general-tab">
-                                <form class="needs-validation" method="POST">
-                                    <div class="form-group row">
-                                        <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span> Title</label>
-                                        <?php
-                                            while($result = mysqli_fetch_assoc($dashdata)){
-                                         	echo '<input class="form-control col-xl-8 col-md-7"  id="validationCustom0" name="title" value='.$result['Title'] .' type="text" readonly>
-                                    </div>
-                                    <div class="form-group row editor-label">
-                                        <label class="col-xl-3 col-md-4"><span>*</span> Description</label>
-                                        <div class="col-xl-8 col-md-7 editor-space">
-                                            <textarea id="editor1" name="desc" cols="30" rows="10" readonly> '.$result['Description'].'</textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-xl-3 col-md-4">Country Name</label>
-                                        <input class="form-control col-md-7" name="cn" value='.$result['Country'].' readonly>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-xl-3 col-md-4">City Name</label>
-                                        <input class="form-control col-md-7" name="ci" value='.$result['City'].' readonly>
-                                            
-                                        </select>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-xl-3 col-md-4"> Current Date</label>
-                                        <input class="form-control col-md-7" name="cd" value='.$result['cd'].' readonly>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-xl-3 col-md-4">Date Of Visit</label>
-                                        <input class="form-control col-md-7" name="dv" value='.$result['dv'].' readonly >
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-xl-3 col-md-4">Date Of Return</label>
-                                        <input class="form-control col-md-7" name="dr" value='.$result['dr'].' readonly>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-xl-3 col-md-4">Travel Mode</label>
-                                        <input class="form-control  col-md-7"  id="validationCustom0" name="title" value='.$result['tv'] .' type="text" readonly>
-                                        
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-xl-3 col-md-7" >Select Travel Mode</label>
-                                        <div class="col-md-7">
-                                            <!-- Dropdown to choose Travel Mode -->
-                                            <form class="form-control  col-md-7" method="POST" action="" >
-                                                <select class="form-control" name="travelMode" onchange="this.form.submit()">
-                                                    <option value="">Select Travel Mode</option>
-                                                    <option value="train">Train</option>
-                                                    <option value="bus">Bus</option>
-                                                    <option value="flight">Flight</option>
-                                                </select>
-                                            </form>
-                                        </div>
-                                        </div>
-                                    <div class="form-group row">
-                                        <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Accommodation/Hotel Name</label>
-                                        <input class="form-control  col-md-7" name="hn" id="validationCustom0" value='.$result['hn'].' type="text" readonly>  
-                                        <div class="col-md-2">
-                                            <!-- Button to redirect to hotel booking page -->
-                                            <a href="https://www.makemytrip.com/hotels/" class="btn btn-primary" target="_blank">Check out more</a>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row editor-label">
-                                        <label class="col-xl-3 col-md-4"><span>*</span> Address</label>
-                                        <div class="col-xl-8 col-md-7 editor-space">
-                                            <textarea id="editor1" name="ad" cols="50" rows="5" maxlength="600" value='.$result['address'].' readonly>'.$result['address'].'</textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row editor-label">
-                                        <label class="col-xl-3 col-md-4"><span>*</span>Interesting Places To Visit</label>
-                                        <div class="col-xl-8 col-md-7 editor-space">
-                                            <textarea id="editor1" name="iv" value='.$result['ptv'].' cols="50" rows="5" maxlength="1000" readonly>'.$result['ptv'].'</textarea> ';}?>
-                                        </div>
-                                    </div>
-                                </form>
-                                <div class="typo-content product-pagination ">
-                                    <ul class="pagination">
-                                        <li class="page-item"><a class="page-link" href="display1.php?title=<?php echo urlencode($resulta['Title']); ?>&date=<?php echo urlencode($resulta['cd']); ?>&email=<?php echo urlencode($resulta['eml']);?>">Next</a></li>
-
-                                        <li class="page-item"><a class="page-link" href="display1.php?title=<?php echo urlencode($resulta['Title']); ?>&date=<?php echo urlencode($resulta['cd']); ?>&email=<?php echo urlencode($resulta['eml']); ?>" aria-label="Next"><span aria-hidden="true"><i class="fa fa-chevron-right" aria-hidden="true"></i></span> <span class="sr-only">Next</span></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                
-
-<!-- latest jquery -->
+                <div class="row">
+                    <div class="col-md-6 footer-copyright">
+                        <p class="mb-0">Copyright 2023 © Travel All rights reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- footer end-->
+    </div>
+    </div>
+<!-- latest jquery-->
 <script src="js/jquery-3.3.1.min.js"></script>
 
-<!-- Bootstrap js -->
+<!-- Bootstrap js-->
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.js"></script>
 
-<!-- feather icon js -->
+<!-- feather icon js-->
 <script src="js/feather.min.js"></script>
 <script src="js/feather-icon.js"></script>
 
-<!-- Sidebar jquery -->
+<!-- Sidebar jquery-->
 <script src="js/sidebar-menu.js"></script>
 
-<!-- Customizer admin -->
+
+<!--Customizer admin-->
 <script src="js/admin-customizer.js"></script>
 
-<!-- lazyload js -->
+<!-- lazyload js-->
 <script src="js/lazysizes.min.js"></script>
 
-<!-- right sidebar js -->
+<!--right sidebar js-->
 <script src="js/chat-menu.js"></script>
-
-<!-- dropzone js -->
+    
+    
+<!-- dropzone js-->
 <script src="js/dropzone-script.js"></script>
-<script src="js/dropzone.js"></script>
+<script src="js/dropzone.js"></script>    
+    
+    
 
-<!-- Jsgrid js -->
-<script src="js/jsgrid.min.js"></script>
-<script src="js/griddata-page-list.js"></script>
-<script src="js/jsgrid-page-list.js"></script>
-
-<!-- Datepicker jquery -->
-<script src="js/datepicker.custom.js"></script>
+<!--Datepicker jquery
+    
+ <script src="js/datepicker.custom.js"></script>
 <script src="js/datepicker.en.js"></script>
-<script src="js/datepicker.js"></script>
-
-<!-- script admin -->
+<script src="js/datepicker.js"></script>-->
+    
+<!--script admin-->
 <script src="js/admin-script.js"></script>
+<!-- Travel Journal UI enhancements -->
+<script src="js/travel-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const carousel = document.getElementById('tjCarousel');
+
+carousel.addEventListener('slid.bs.carousel', function () {
+    document.querySelectorAll('#tjCarousel video').forEach(v => {
+        v.pause();
+        v.currentTime = 0;
+    });
+
+    const activeVideo = carousel.querySelector('.carousel-item.active video');
+    if (activeVideo) {
+        activeVideo.play();
+    }
+});
+
+// autoplay first video if first slide is video
+window.addEventListener('load', () => {
+    const firstVideo = carousel.querySelector('.carousel-item.active video');
+    if (firstVideo) {
+        firstVideo.play();
+    }
+});
+</script>
+
 
 </body>
 </html>

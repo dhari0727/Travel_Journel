@@ -83,6 +83,8 @@ if(isset($_POST['lgn'])){
 
     <!-- Theme css -->
     <link rel="stylesheet" type="text/css" href="css/color18.css" media="screen" id="color">
+    <!-- Travel Journal custom theme overrides -->
+    <link rel="stylesheet" type="text/css" href="css/travel-theme.css">
 
 
 </head>
@@ -135,24 +137,12 @@ if(isset($_POST['lgn'])){
 
 
 
-
     <!--section start-->
-    <section class="login-page section-b-space">
+    <section class="login-page section-b-space" data-animate="fade-up">
         <!-- breadcrumb start -->
     <div class="breadcrumb-section">
         <div class="container">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="page-title">
-                        <h2>customer's login</h2>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <nav aria-label="breadcrumb" class="theme-breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
-                            <li class="breadcrumb-item active">login</li>
-                        </ol>
+            
                     </nav>
                 </div>
             </div>
@@ -162,7 +152,7 @@ if(isset($_POST['lgn'])){
 
         <div class="container">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-6" data-animate="fade-up">
                     <h3>Login</h3>
                     <div class="theme-card">
                         <form class="theme-form" method="POST">
@@ -180,7 +170,7 @@ if(isset($_POST['lgn'])){
                         </form>
                     </div>
                 </div>
-                <div class="col-lg-6 right-login">
+                <div class="col-lg-6 right-login" data-animate="fade-up">
                     <h3>New Customer</h3>
                     <div class="theme-card authentication-right">
                         <h6 class="title-font">Create A Account</h6>
@@ -994,13 +984,7 @@ if(isset($_POST['lgn'])){
     </div>
     <!-- theme setting -->
 
-    <!-- tap to top -->
-    <div class="tap-top">
-        <div>
-            <i class="fa fa-angle-double-up"></i>
-        </div>
-    </div>
-    <!-- tap to top End -->
+    
 
 
     <!-- latest jquery-->
@@ -1030,6 +1014,8 @@ if(isset($_POST['lgn'])){
 
     <!-- Theme js-->
     <script src="js/script.js"></script>
+    <!-- Travel Journal UI enhancements -->
+    <script src="js/travel-ui.js"></script>
 
 
 
